@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model tblChiTietDonHang {
+  PK_MaChiTietDonHang Int @id @default(autoincrement())
+  SoLuong             Int
+  DonGia              Int
+  FK_MaDonHang        Int
+  FK_MaDienThoai      Int
+}
+
+model tblDanhGia {
+  PK_MaDanhGia    Int      @id @default(autoincrement())
+  TenKhachHang    String   @db.VarChar(50)
+  NoiDungDanhGia  String   @db.Text
+  ThoiGianDanhGia DateTime @default(now()) @db.DateTime(0)
+  FK_MaDienThoai  Int
+}
+
+model tblDienThoai {
+  PK_MaDienThoai Int    @id @default(autoincrement())
+  TenDienThoai   String @db.VarChar(50)
+  DoPhanGiai     String @db.VarChar(15)
+  ThuongHieu     String @db.VarChar(50)
+  HinhAnh        String @db.VarChar(100)
+  HeDieuHanh     String @db.VarChar(10)
+  CamTruoc       String @db.VarChar(10)
+  CamSau         String @db.VarChar(10)
+  RAM            String @db.VarChar(10)
+  ROM            String @db.VarChar(10)
+  Pin            String @db.VarChar(10)
+  SoLuong        Int
+  DonGia         Int
+}
+
+model tblDonHang {
+  PK_MaDonHang       Int       @id @default(autoincrement())
+  TenNguoiNhan       String    @db.VarChar(50)
+  DiaChiGiaoHang     String?   @db.Text
+  SoDienThoai        String    @db.VarChar(10)
+  GhiChu             String?   @db.Text
+  ThoiGianTaoDonHang DateTime? @default(now()) @db.DateTime(0)
+  TrangThai          String    @db.VarChar(50)
+}
+
+model tblGioHang {
+  PK_MaGioHang       Int     @id @default(autoincrement())
+  HinhAnh            String  @db.VarChar(100)
+  TenDienThoai       String  @db.VarChar(50)
+  SoLuong            Int
+  DonGia             Int
+  TenDangNhap        String  @db.VarChar(50)
+  TrangThaiThanhToan Boolean
+  FK_MaDienThoai     Int
+}
+
+model tblKhachHang {
+  PK_MaKhachHang    Int       @id @default(autoincrement())
+  TenKhachHang      String    @db.VarChar(50)
+  DiaChi            String?   @db.VarChar(50)
+  SoDienThoai       String    @db.VarChar(10)
+  Email             String    @db.VarChar(50)
+  TenDangNhap       String    @db.VarChar(20)
+  MatKhau           String    @db.Text
+  VerificationToken String?   @db.Text
+  IsVerified        Boolean?  @default(false)
+  VerifiedDate      DateTime? @db.Date
+  TinhTrangHoatDong Boolean?  @default(true)
+}
+
+model tblLienHe {
+  PK_MaLienHe Int      @id @default(autoincrement())
+  TenNguoiGui String   @db.VarChar(50)
+  Email       String   @db.VarChar(50)
+  SoDienThoai String   @db.VarChar(10)
+  TinNhan     String   @db.Text
+  ThoiGian    DateTime @default(now()) @db.DateTime(0)
+}
+
+model tblNhanVien {
+  PK_MaNhanVien Int       @id @default(autoincrement())
+  TenNhanVien   String    @db.VarChar(50)
+  DiaChi        String    @db.VarChar(100)
+  SoDienThoai   String    @db.VarChar(10)
+  Email         String    @db.VarChar(50)
+  TenDangNhap   String    @db.VarChar(50)
+  MatKhau       String    @db.Text
+  NgaySinh      DateTime  @db.Date
+  NgayVaoLam    DateTime  @db.Date
+  NgayKetThuc   DateTime? @db.Date
+  LuongCoBan    Float?    @db.Float
+  PhuCap        Float?    @db.Float
+  Quyen         String    @default("NhanVien") @db.VarChar(20)
+}
