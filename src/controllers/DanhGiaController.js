@@ -34,7 +34,7 @@ const createDanhGia = async (req, res) => {
 }
 
 const getAllDanhGia = async (req, res) => {
-    const FK_MaDienThoai = parseInt(req.params.FK_MaDienThoai)
+    const FK_MaDienThoai = parseInt(req.params.PK_MaDienThoai)
     if (!FK_MaDienThoai) {
         res.status(StatusCodes.BAD_REQUEST).json({ msg: 'Không có mã điện thoại' })
         throw new CustomAPIError.BadRequestError('Không có mã điện thoại')
