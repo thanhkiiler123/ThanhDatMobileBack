@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 
 const getKhachHang = async (req, res) => {
     const KhachHang = await prisma.tblKhachHang.findMany({})
-    if (!KhachHang) {
+    if (KhachHang.length === 0) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: 'Không tìm thấy khách hàng nào!' })
         throw new CustomAPIError.NotFoundError('Không tìm thấy khách hàng nào!')
     }

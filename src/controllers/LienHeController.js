@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 
 const getLienHe = async (req, res) => {
     const LienHe = await prisma.tblLienHe.findMany({})
-    if (!LienHe) {
+    if (LienHe.length === 0) {
         throw new CustomAPIError.NotFoundError('Không tìm thấy liên hệ nào')
     }
     res.status(StatusCodes.OK).json(LienHe)

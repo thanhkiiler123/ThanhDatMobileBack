@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 
 const getNhanVien = async (req, res) => {
     const NhanVien = await prisma.tblNhanVien.findMany({})
-    if (!NhanVien) {
+    if (NhanVien.length === 0) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: 'Không tìm thấy nhân viên nào!' })
         throw new CustomAPIError.NotFoundError('Không tìm thấy nhân viên nào!')
     }
@@ -66,8 +66,7 @@ const addNhanVien = async (req, res) => {
                 Quyen: Quyen,
             },
         })
-        const NhanVien = await prisma.tblNhanVien.findMany({})
-        res.status(StatusCodes.CREATED).json(NhanVien)
+        res.status(StatusCodes.CREATED).json({ msg: 'Thêm nhân viên thành công' })
     } else {
         res.status(StatusCodes.BAD_REQUEST).json({ msg: 'Đã có nhân viên này' })
         throw new CustomAPIError.BadRequestError('Đã có nhân viên này')

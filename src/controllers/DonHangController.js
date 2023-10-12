@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 const getDonHang = async (req, res) => {
     let DonHang = await prisma.tblDonHang.findMany({})
-    if (!DonHang) {
+    if (DonHang.length === 0) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: 'Không tìm thấy dữ liệu' })
         throw new CustomAPIError.NotFoundError('Không tìm thấy dữ liệu')
     } else {
@@ -20,7 +20,7 @@ const getChiTietDonHang = async (req, res) => {
             FK_MaDonHang: PK_MaDonHang,
         },
     })
-    if (!ChiTietDonHang) {
+    if (ChiTietDonHang.length === 0) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: 'Không tìm thấy dữ liệu' })
         throw new CustomAPIError.NotFoundError('Không tìm thấy dữ liệu')
     } else {

@@ -2,18 +2,19 @@ const { PrismaClient } = require('@prisma/client')
 const { StatusCodes } = require('http-status-codes')
 const { redisGet, redisSet } = require('../utils/redisGetSet')
 const CustomAPIError = require('../errors')
-const { checkPermissions } = require('../utils')
 
 const prisma = new PrismaClient()
 
 let checkOut = async (req, res) => {
     let { TenNguoiNhan, DiaChi, SoDienThoai } = req.body
     if (!TenNguoiNhan || !DiaChi || !SoDienThoai) {
-        return res.status(StatusCodes.BAD_REQUEST).json({ msg: 'Không đủ dữ liệu' })
+        res.status(StatusCodes.BAD_REQUEST).json({ msg: 'Không đủ dữ liệu' })
+        throw new CustomAPIError.BadRequestError('Không đủ dữ liệu')
     }
     let GioHang = await prisma.tblGioHang.findMany({
         where: {
             TenDangNhap: TenNguoiNhan,
+            TrangThaiThanhToan: false,
         },
     })
     let DonHang = await prisma.tblDonHang.create({
