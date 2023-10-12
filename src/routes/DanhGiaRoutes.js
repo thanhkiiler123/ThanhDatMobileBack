@@ -5,6 +5,8 @@ const { createDanhGia, getAllDanhGia, updateDanhGia, deleteDanhGia } = require('
 
 router.route('/').post(createDanhGia)
 
-router.route('/:PK_MaDanhGia').get(getAllDanhGia).put(updateDanhGia).delete(deleteDanhGia)
+router.route('/:PK_MaDienThoai').get(getAllDanhGia)
+
+router.route('/:PK_MaDanhGia').put(updateDanhGia).delete(deleteDanhGia)
 
 module.exports = router
